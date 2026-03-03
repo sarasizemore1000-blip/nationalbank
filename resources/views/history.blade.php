@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transaction History - National Bank</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fdf2f2; /* very light soft red background */
+      margin: 0;
+      color: #333;
+    }
+
+    .navbar {
+      background-color: #C62828; /* soft red */
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar .logo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .navbar .menu a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: 500;
+    }
+
+    .navbar .menu a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      padding: 25px;
+    }
+
+    h2 {
+      color: #8E2424; /* darker soft red */
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background-color: #C62828; /* soft red */
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #fdecea; /* light red hover */
+    }
+
+    .credit {
+      color: #2e7d32;
+      font-weight: bold;
+    }
+
+    .debit {
+      color: #C62828; /* soft red instead of harsh red */
+      font-weight: bold;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 30px;
+      color: #888;
+      font-style: italic;
+    }
+
+    /* Floating Chat Button */
+    #floatingChatBtn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 70px;
+      height: 70px;
+      background: #28a745;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.28);
+      cursor: pointer;
+      z-index: 9999;
+      animation: floatPulse 1.8s infinite;
+      text-decoration: none;
+    }
+
+    #floatingChatBtn:hover {
+      background: #1e7e34;
+    }
+
+    @keyframes floatPulse {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .chat-notify-bubble {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: #C62828;
+      color: white;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 50%;
+      font-weight: bold;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="navbar">
+    <div class="logo">National Bank</div>
+    <div class="menu">
+      <a href="/dashboard">Dashboard</a>
+      <a href="/transfer">Transfer</a>
+      <a href="/history">History</a>
+      <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+        @csrf
+        <button style="background:none;border:none;color:white;cursor:pointer;">Logout</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Transaction History</h2>
+
+    @if($transactions->isEmpty())
+      <div class="empty">No transactions yet.</div>
+    @else
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Balance After</th>
+            <th>Description</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($transactions as $transaction)
+            <tr>
+              <td>{{ $transaction->created_at->format('M d, Y - h:i A') }}</td>
+              <td>{{ ucfirst($transaction->type) }}</td>
+              <td class="{{ $transaction->type == 'credit' ? 'credit' : 'debit' }}">
+                ${{ number_format($transaction->amount, 2) }}
+              </td>
+              <td>${{ number_format($transaction->balance_after, 2) }}</td>
+              <td>{{ $transaction->description ?? 'N/A' }}</td>
+              <td>{{ ucfirst($transaction->status) }}</td>
+            </tr>
+          @endforeach
+        </tbody>
+      </table>
+    @endif
+  </div>
+
+  <!-- Floating Chat Button -->
+  <a href="{{ route('user.chat') }}" id="floatingChatBtn">
+      Chat
+      <span id="unread-badge" class="chat-notify-bubble">0</span>
+  </a>
+
+</body>
+</html>
