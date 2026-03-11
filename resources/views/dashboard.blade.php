@@ -113,7 +113,7 @@
     <p style="font-size: 16px; margin: 5px 0;">
         <strong>Tel:</strong>
         <a href="tel:+15065288838" style="color: #ffeb3b; text-decoration: none;">
-            +1506-5288-838
+            +1 506-5288-838
         </a>
     </p>
 
