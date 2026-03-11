@@ -107,18 +107,18 @@
     <h2 style="font-size: 26px; margin-bottom: 10px;">Contact National Bank</h2>
 
     <p style="font-size: 16px; margin: 5px 0;">
-        <strong>Washington DC, USA, E-mail: infonovatrustbank@accountant.com</strong>
+        <strong>705 St Peter Ave, Bathurst, NB E2A 2Y9, Canada</strong>
     </p>
 
     <p style="font-size: 16px; margin: 5px 0;">
         <strong>Tel:</strong>
-        <a href="tel:+19793982810" style="color: #ffeb3b; text-decoration: none;">
-            +1 979-398-2810
+        <a href="tel:+15065288838" style="color: #ffeb3b; text-decoration: none;">
+            +1 506-5288-838
         </a>
     </p>
 
     <p style="font-size: 14px; color: #f8d7da; margin-top: 20px;">
-        © {{ date('Y') }} National Bank. All Rights Reserved.
+        Â© {{ date('Y') }} National Bank. All Rights Reserved.
     </p>
 </section>
 
